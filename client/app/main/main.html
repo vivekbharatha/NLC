@@ -24,7 +24,7 @@
         <a href="{{bar.url}}">{{bar.name}}</a>
         <br>
         <p>&nbsp;Rating: {{bar.rating}}</p>
-        <div class="going"><button class="btn" ng-click="$ctrl.going(bar.id)">Going</button></div>
+        <div class="going">{{bar.goingCount}} &nbsp;<button class="btn" ng-click="$ctrl.going(bar.id, $index)">Going</button></div>
       </div>
     </div>
   </div>

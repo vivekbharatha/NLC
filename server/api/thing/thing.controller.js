@@ -14,6 +14,7 @@ import request from 'request';
 
 import jsonpatch from 'fast-json-patch';
 import Thing from './thing.model';
+import { read } from 'fs';
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -132,7 +133,31 @@ export function search(req, res) {
       return res.status(500).json({error: 'yelp server issue'});
     }
 
-    return res.json(body.businesses);
+    var result = [];
+    if (body.businesses) {
+      var tmp = {};
+      body.businesses.forEach(function (bar) {
+        bar.goingCount = 0;
+        tmp[bar.id] = bar;
+      });
+      Thing.find().exec()
+      .then(function (bars) {
+        bars.forEach(function (bar, index) {
+          var _id = bar.barId;
+          if (tmp[_id]) {
+            tmp[_id].goingCount = bar.goingIds.length;
+          }
+        });
+        for(var key in tmp) {
+          if (tmp.hasOwnProperty(key)) {
+            result.push(tmp[key]);
+          }
+        }
+        return res.json(result);
+      });
+    } else {
+      return res.json(result);
+    }
   });
 }
 

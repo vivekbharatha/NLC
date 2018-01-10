@@ -33,16 +33,17 @@ export class MainController {
     });
   }
 
-  going(id) {
+  going(id, index) {
     var _self = this;
-    console.log(id);
     if (!_self.auth.isLoggedInSync()) {
       return location.href = '/login';
     }
 
     this.$http.get('/api/things/going/' + id)
     .then(function (response) {
-      console.log(response);
+     if (response.data.data) {
+      _self.bars[index].goingCount = response.data.data.goingIds.length;
+     }
     })
     .catch(function (err) {
       alert('Yelp server error');
