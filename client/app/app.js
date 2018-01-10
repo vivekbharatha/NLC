@@ -25,8 +25,7 @@ import util from '../components/util/util.module';
 
 import './app.css';
 
-angular.module('nlcApp', [ngCookies, ngResource, ngSanitize, uiRouter, uiBootstrap, _Auth, account,
-  admin, 'validation.match', navbar, footer, main, constants, util
+angular.module('nlcApp', [ngCookies, ngResource, ngSanitize, uiRouter, uiBootstrap, _Auth, account, 'validation.match', navbar, footer, main, constants, util
 ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {

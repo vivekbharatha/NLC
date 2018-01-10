@@ -5,11 +5,13 @@ var controller = require('./thing.controller');
 
 var router = express.Router();
 
-router.get('/', controller.index);
-router.get('/:id', controller.show);
-router.post('/', controller.create);
-router.put('/:id', controller.upsert);
-router.patch('/:id', controller.patch);
-router.delete('/:id', controller.destroy);
+// router.get('/', controller.index);
+// router.get('/:id', controller.show);
+// router.post('/', controller.create);
+// router.put('/:id', controller.upsert);
+// router.patch('/:id', controller.patch);
+// router.delete('/:id', controller.destroy);
+
+router.get('/search/:q', controller.search);
 
 module.exports = router;
