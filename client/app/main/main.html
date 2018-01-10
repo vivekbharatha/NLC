@@ -21,7 +21,7 @@
     <div class="col-sm-8 col-sm-offset-2">
       <div class="bar" ng-repeat="bar in $ctrl.bars">
         <img class="bar-image" src="{{bar.image_url}}" /> &nbsp;
-        <a href="{{bar.url}}">{{bar.name}}</a>
+        <a target="_blank" href="{{bar.url}}">{{bar.name}}</a>
         <br>
         <p>&nbsp;Rating: {{bar.rating}}</p>
         <div class="going">{{bar.goingCount}} &nbsp;<button class="btn" ng-click="$ctrl.going(bar.id, $index)">Going</button></div>
