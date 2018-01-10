@@ -121,7 +121,7 @@ export function destroy(req, res) {
 
 export function search(req, res) {
   var options = {
-    url: 'https://api.yelp.com/v3/businesses/search?term=bar&location=' + req.query.query,
+    url: 'https://api.yelp.com/v3/businesses/search?term=bar&location=' + req.params.query,
     headers: {
       'Authorization': 'Bearer ' + process.env.YELP_API_KEY
     },
@@ -133,5 +133,39 @@ export function search(req, res) {
     }
 
     return res.json(body.businesses);
+  });
+}
+
+export function going(req, res) {
+  var barId = req.params.barId;
+  var userId = req.user._id.toHexString();
+  Thing.findOne({ barId: barId }).exec()
+  .then(function (bar) {
+    if (bar) {
+      if (bar.goingIds.indexOf(userId) === -1) {
+        bar.goingIds.push(userId);
+      } else {
+        bar.goingIds.splice(bar.goingIds.indexOf(userId),1);
+      }
+      bar.save(function (err, data) {
+        return res.json({ status: 'success', data: data });
+      });
+    } else {
+      bar = {
+        barId: barId,
+        goingIds: [userId]
+      }
+
+      Thing.create(bar)
+      .then(function (data){
+        return res.json({ status: 'success', data: data });
+      })
+      .catch(function (err) {
+        return res.json({ error: 'Server error' });
+      });
+    }
+  })
+  .catch(function (err) {
+    return res.json({ error: 'Server error' });
   });
 }

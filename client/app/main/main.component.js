@@ -8,12 +8,17 @@ export class MainController {
   bars = [];
 
   /*@ngInject*/
-  constructor($http) {
+  constructor($http, Auth) {
     this.$http = $http;
+    this.auth = Auth;
   }
 
   $onInit() {
-    
+    var q = localStorage.getItem('query');
+    if (q) {
+      this.query = q;
+      this.getSearch();
+    }
   }
 
   getSearch() {
@@ -21,16 +26,28 @@ export class MainController {
     this.$http.get('/api/things/search/' + this.query)
     .then(function (response) {
       _self.bars = response.data;
-      console.log(_self.bars);
+      localStorage.setItem('query', _self.query);
     })
     .catch(function (err) {
       alert('Yelp server error');
-    })
+    });
   }
 
   going(id) {
     var _self = this;
     console.log(id);
+    if (!_self.auth.isLoggedInSync()) {
+      return location.href = '/login';
+    }
+
+    this.$http.get('/api/things/going/' + id)
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (err) {
+      alert('Yelp server error');
+    })
+
   }
 }
 

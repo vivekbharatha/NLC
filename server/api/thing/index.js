@@ -2,7 +2,7 @@
 
 var express = require('express');
 var controller = require('./thing.controller');
-
+import * as auth from '../../auth/auth.service';
 var router = express.Router();
 
 // router.get('/', controller.index);
@@ -12,6 +12,7 @@ var router = express.Router();
 // router.patch('/:id', controller.patch);
 // router.delete('/:id', controller.destroy);
 
-router.get('/search/:q', controller.search);
+router.get('/search/:query', controller.search);
+router.get('/going/:barId', auth.isAuthenticated(), controller.going);
 
 module.exports = router;
