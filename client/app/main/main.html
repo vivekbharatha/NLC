@@ -1,13 +1,31 @@
 <header class="hero-unit" id="banner">
   <div class="container">
-    <h1>NightLife Coordination App</h1>
+    <h1>Nightlife Coordination App</h1>
   </div>
 </header>
 
 <div class="container">
   <div class="row">
-    <div class="col-lg-12">
-
+    <form class="form" name="search" ng-submit="$ctrl.getSearch()">
+      <div class="col-sm-8 col-sm-offset-2">
+        <div class="input-group">
+            <input ng-model="$ctrl.query" required class="form-control form-inline" type="text" placeholder="Enter city to search" />
+            <span class="input-group-btn">
+              <button class="btn btn-primary" type="submit">Search !</button>
+            </span>
+          </div>
+      </div>
+    </form>
+  </div>
+  <div class="row">
+    <div class="col-sm-8 col-sm-offset-2">
+      <div class="bar" ng-repeat="bar in $ctrl.bars">
+        <img class="bar-image" src="{{bar.image_url}}" /> &nbsp;
+        <a href="{{bar.url}}">{{bar.name}}</a>
+        <br>
+        <p>&nbsp;Rating: {{bar.rating}}</p>
+        <div class="going"><button class="btn" ng-click="$ctrl.going(bar.id)">Going</button></div>
+      </div>
     </div>
   </div>
 </div>

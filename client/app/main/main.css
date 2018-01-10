@@ -24,3 +24,38 @@
 .navbar-text {
   margin-left: 15px;
 }
+
+.bar-image {
+  width: 100px;
+  max-height: 100px;
+}
+
+.bar {
+  position: relative;
+  display: block;
+  height: 110px;
+  margin-top: 5px;
+  border: 1px solid #c8c8c8;
+}
+
+.bar img {
+  float: left;
+  display: inline;
+}
+
+.bar a {
+  float: left;
+  display: inline;
+  margin-left: 5px;
+}
+
+.bar p {
+  display: block;
+  margin-left: 5px;
+}
+
+.going {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}

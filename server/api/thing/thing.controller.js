@@ -10,6 +10,8 @@
 
 'use strict';
 
+import request from 'request';
+
 import jsonpatch from 'fast-json-patch';
 import Thing from './thing.model';
 
@@ -115,4 +117,21 @@ export function destroy(req, res) {
     .then(handleEntityNotFound(res))
     .then(removeEntity(res))
     .catch(handleError(res));
+}
+
+export function search(req, res) {
+  var options = {
+    url: 'https://api.yelp.com/v3/businesses/search?term=bar&location=' + req.query.query,
+    headers: {
+      'Authorization': 'Bearer ' + process.env.YELP_API_KEY
+    },
+    json: true
+  };
+  request(options, function (err, response, body) {
+    if (err) {
+      return res.status(500).json({error: 'yelp server issue'});
+    }
+
+    return res.json(body.businesses);
+  });
 }
